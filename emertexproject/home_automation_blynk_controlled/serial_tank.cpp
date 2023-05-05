@@ -15,21 +15,34 @@ void init_serial_tank(void)
 
 unsigned int volume(void)
 {
-    
+    Serial.write(VOLUME);
+    //wait for data
+    while(!Serial.available());
+    valueh = Serial.read();
+    while(!Serial.available());
+    valuel = Serial.read();
+    //combine upper and lower byte to form volume
+    volume_value = valueh << 8 | valuel;
+
+    return volume_value;
 }
 void enable_inlet(void)
 {
-    
+    Serial.write(INLET_VALVE);
+    Serial.write(ENABLE);
 }  
 void disable_inlet(void)
 {
-    
+    Serial.write(INLET_VALVE);
+    Serial.write(DISABLE);
 }  
 void enable_outlet(void)
 {  
-    
+    Serial.write(OUTLET_VALVE);
+    Serial.write(ENABLE);
 }
 void disable_outlet(void)
 {  
-    
+    Serial.write(OUTLET_VALVE);
+    Serial.write(DISABLE);
 }
